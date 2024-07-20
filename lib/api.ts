@@ -62,7 +62,21 @@ export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(
     `
     query AllPosts {
-      posts(first: 20, where: { orderby: { field: DATE, order: DESC } }) {
+      posts(first: 10, 
+        where: { orderby: [{ field: DATE, order: DESC }], 
+          status: PUBLISH,
+          taxQuery: {
+            relation: AND,
+            taxArray: [
+              {
+                field: SLUG,
+                operator: AND,
+                taxonomy: CATEGORY,
+                terms: ["sports"],
+              },
+            ],
+          }, 
+        }) {
         edges {
           node {
             title
