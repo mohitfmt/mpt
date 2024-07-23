@@ -5,34 +5,35 @@ import Link from "next/link";
 
 export default function PostPreview({
   title,
+  excerpt,
   coverImage,
   date,
-  excerpt,
-  author,
   slug,
 }) {
   return (
-    <div>
-      <div className="mb-5">
+    <article className="flex gap-2 mb-8">
+      <figure className="w-1/2 md:w-1/3">
         {coverImage && (
           <CoverImage title={title} coverImage={coverImage} slug={slug} />
         )}
+      </figure>
+      <div className="w-1/2 md:w-2/3">
+        <header>
+          <h3 className="text-xl md:text-2xl mb-3 font-semibold font-rhd">
+            <Link
+              href={`/posts/${slug}`}
+              dangerouslySetInnerHTML={{ __html: title }}
+            ></Link>
+          </h3>
+        </header>
+        <div
+          className="text-base font-thin hidden md:flex"
+          dangerouslySetInnerHTML={{ __html: excerpt }}
+        />
+        <div className="text-sm text-right">
+          <Date dateString={date} />
+        </div>
       </div>
-      <h3 className="text-3xl mb-3 leading-snug">
-        <Link
-          href={`/posts/${slug}`}
-          className="hover:underline"
-          dangerouslySetInnerHTML={{ __html: title }}
-        ></Link>
-      </h3>
-      <div className="text-lg mb-4">
-        <Date dateString={date} />
-      </div>
-      <div
-        className="text-lg leading-relaxed mb-4"
-        dangerouslySetInnerHTML={{ __html: excerpt }}
-      />
-      <Avatar author={author} />
-    </div>
+    </article>
   );
 }

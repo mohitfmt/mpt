@@ -1,26 +1,29 @@
+import Link from "next/link";
 import Container from "./container";
+import React from "react";
+import { social } from "../lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="bg-accent-1 border-t border-accent-2">
+    <footer className="bg-accent-1 border-t border-accent-2 text-black px-5">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="https://nextjs.org/docs/basic-features/pages"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Read Documentation
-            </a>
-            <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/}`}
-              className="mx-3 font-bold hover:underline"
-            >
-              View on GitHub
-            </a>
+        <div className="py-28 flex flex-col lg:flex-row items-center justify-between">
+          <h1 className="text-6xl font-thin ml-2 text-black hidden md:block font-rhd">
+            Match<span className="font-bold">Point</span> Times
+          </h1>
+          <div className="flex flex-row items-center gap-1">
+            {social.map((item, index) => (
+              <Link
+                key={index}
+                href={item.url}
+                title={item.name}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-white hover:bg-accent-7 bg-accent-1 rounded-full p-3 text-lg"
+              >
+                {React.createElement(item.icon)}
+              </Link>
+            ))}
           </div>
         </div>
       </Container>

@@ -31,7 +31,7 @@ export default function Post({ post, posts, preview }) {
           <>
             <article>
               <Head>
-                <title>{`${post.title} | Next.js Blog Example`}</title>
+                <title>{`${post.title} | Match Point Times`}</title>
                 <meta
                   property="og:image"
                   content={post.featuredImage?.node.sourceUrl}

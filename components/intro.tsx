@@ -1,26 +1,26 @@
+import Link from "next/link";
+import Logo from "./logo";
+import { social } from "../lib/constants";
+import React from "react";
+
 export default function Intro() {
   return (
-    <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
-      <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-        Blog.
-      </h1>
-      <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        A statically generated blog example using{" "}
-        <a
-          href="https://nextjs.org/"
-          className="underline hover:text-success duration-200 transition-colors"
-        >
-          Next.js
-        </a>{" "}
-        and{" "}
-        <a
-          href="#"
-          className="underline hover:text-success duration-200 transition-colors"
-        >
-          No Name
-        </a>
-        .
-      </h4>
-    </section>
+    <header className="flex justify-between py-4 my-4">
+      <Logo />
+      <div className="flex flex-row items-center gap-0 md:gap-1">
+        {social.map((item, index) => (
+          <Link
+            key={index}
+            href={item.url}
+            title={item.name}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-black hover:bg-white bg-black rounded-full p-2 md:p-3 text-lg"
+          >
+            {React.createElement(item.icon)}
+          </Link>
+        ))}
+      </div>
+    </header>
   );
 }
