@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import "../styles/index.css";
 import { Red_Hat_Display, Merriweather } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const rhd = Red_Hat_Display({
   subsets: ["latin"],
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className={`${rhd.variable} ${merriweather.variable}`}>
       <Component {...pageProps} />
+      <GoogleAnalytics gaId="UA-123456789-0" />
     </div>
   );
 }
