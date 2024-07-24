@@ -73,7 +73,7 @@ export async function getAllPostsForHome(preview) {
                 field: SLUG,
                 operator: AND,
                 taxonomy: CATEGORY,
-                terms: ["badminton"],
+                terms: ["sports"],
               },
             ],
           }, 
@@ -229,12 +229,74 @@ export async function getCategoryNews(categoryName, preview) {
   const data = await fetchAPI(
     `
     query categoryPost($categoryName: String) {
-      posts(first: 11, 
+      posts(first: 10, 
         where: { orderby: [{ field: DATE, order: DESC }], 
           status: PUBLISH,
           taxQuery: {
             relation: AND,
             taxArray: [
+              {
+                field: SLUG,
+                operator: AND,
+                taxonomy: CATEGORY,
+                terms: [$categoryName],
+              },
+            ],
+          }, 
+        }) {
+        edges {
+          node {
+            title
+            excerpt
+            slug
+            date
+            featuredImage {
+              node {
+                sourceUrl
+              }
+            }
+            author {
+              node {
+                name
+                firstName
+                lastName
+                avatar {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+    {
+      variables: {
+        categoryName,
+        preview,
+      },
+    }
+  );
+
+  return data?.posts;
+}
+
+export async function getOtherSportsNews(categoryName, preview) {
+  const data = await fetchAPI(
+    `
+    query categoryPost($categoryName: String) {
+      posts(first: 10, 
+        where: { orderby: [{ field: DATE, order: DESC }], 
+          status: PUBLISH,
+          taxQuery: {
+            relation: AND,
+            taxArray: [
+              {
+                field: SLUG,
+                operator: NOT_IN,
+                taxonomy: CATEGORY,
+                terms: ["football", "tennis", "badminton", "motorsports"],
+              },
               {
                 field: SLUG,
                 operator: AND,

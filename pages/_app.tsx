@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className={`${rhd.variable} ${merriweather.variable}`}>
       <Component {...pageProps} />
-      <GoogleAnalytics gaId="UA-123456789-0" />
+      <GoogleAnalytics gaId="G-FJZBCYDNY5" />
     </div>
   );
 }

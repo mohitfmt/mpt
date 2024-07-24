@@ -5,13 +5,17 @@ import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
-import { getCategoryNews } from "../lib/api";
+import {
+  getAllPostsForHome,
+  getCategoryNews,
+  getOtherSportsNews,
+} from "../lib/api";
 import SomeMoreStories from "../components/some-more-stories";
 import Link from "next/link";
 import Footer from "../components/footer";
 import { WebPageJsonLD } from "../lib/json-lds/org";
 
-const categories = ["football", "tennis", "badminton", "motorsports"];
+const categories = ["sports", "football", "tennis", "badminton", "motorsports"];
 
 export default function Index({ allPosts, preview }) {
   return (
@@ -67,6 +71,13 @@ export default function Index({ allPosts, preview }) {
           type="application/ld+json"
           defer
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateCollectionPageJsonLD(allPosts)),
+          }}
+          type="application/ld+json"
+          defer
+        />
       </Head>
       <Container>
         <Intro />
@@ -74,8 +85,8 @@ export default function Index({ allPosts, preview }) {
           {Object.keys(allPosts).map((category) => {
             const posts = allPosts[category].edges.map((edge) => edge.node);
             const heroPost = posts[0];
-            const morePosts = posts.slice(1, 5);
-            const someMorePosts = posts.slice(5);
+            const morePosts = posts.slice(1, 4);
+            const someMorePosts = posts.slice(4);
             return (
               <section key={category} className="p-5 my-5">
                 <div className="flex items-center pb-4">
@@ -134,9 +145,40 @@ const getAnchorText = (category) => {
   return texts[category] || "Read More Stories";
 };
 
+const generateCollectionPageJsonLD = (allPosts) => {
+  return {
+    "@context": "http://schema.org",
+    "@type": "CollectionPage",
+    headline: "MatchPoint Times | Your Game, Your News, Your Time",
+    description:
+      "Dive into the latest updates and expert analysis on Football, Badminton, Motorsports, and Tennis.",
+    url: "https://matchpointtimes.com/",
+    hasPart: Object.keys(allPosts).map((category) => ({
+      "@type": "Article",
+      headline: `${category.charAt(0).toUpperCase()}${category.slice(1)} News`,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `https://www.freemalaysiatoday.com/category/category/sports/${category}/`,
+      },
+      articleSection: category,
+      image: allPosts[category].edges[0]?.node.featuredImage.node.sourceUrl,
+      datePublished: `${allPosts[category].edges[0]?.node.date}+08:00`,
+      author: {
+        "@type": "Person",
+        name: allPosts[category].edges[0]?.node.author.node.name,
+        url: `https://matchpointtimes.com/contributors/${allPosts[category].edges[0]?.node.author.node.slug}`,
+      },
+    })),
+  };
+};
+
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const postsByCategory = await Promise.all(
-    categories.map((category) => getCategoryNews(category, preview))
+    categories.map((category) =>
+      category !== "sports"
+        ? getCategoryNews(category, preview)
+        : getOtherSportsNews(category, preview)
+    )
   );
 
   const allPosts = categories.reduce((acc, category, index) => {
