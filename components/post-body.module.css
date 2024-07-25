@@ -74,3 +74,11 @@
 .content audio {
   @apply w-full;
 }
+
+.content figure {
+  width: auto !important;
+}
+
+.content img {
+  border-radius: 15px;
+}
