@@ -5,11 +5,7 @@ import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
-import {
-  getAllPostsForHome,
-  getCategoryNews,
-  getOtherSportsNews,
-} from "../lib/api";
+import { getCategoryNews, getOtherSportsNews } from "../lib/api";
 import SomeMoreStories from "../components/some-more-stories";
 import Link from "next/link";
 import Footer from "../components/footer";
@@ -35,7 +31,7 @@ export default function Index({ allPosts, preview }) {
         <meta name="author" content="MatchPoint Times" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.matchpointtimes.com/" />
+        <meta property="og:url" content="https://matchpointtimes.com/" />
         <meta
           property="og:title"
           content="MatchPoint Times | Your Game, Your News, Your Time"
@@ -46,14 +42,11 @@ export default function Index({ allPosts, preview }) {
         />
         <meta
           property="og:image"
-          content="https://www.matchpointtimes.com/default-og-image.jpg"
+          content="https://matchpointtimes.com/default-og-image.jpg"
         />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content="https://www.matchpointtimes.com/"
-        />
+        <meta property="twitter:url" content="https://matchpointtimes.com/" />
         <meta
           property="twitter:title"
           content="MatchPoint Times | Your Game, Your News, Your Time"
@@ -64,7 +57,7 @@ export default function Index({ allPosts, preview }) {
         />
         <meta
           property="twitter:image"
-          content="https://www.matchpointtimes.com/default-twitter-image.jpg"
+          content="https://matchpointtimes.com/default-og-image.jpg"
         />
         <script
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WebPageJsonLD) }}
@@ -114,7 +107,10 @@ export default function Index({ allPosts, preview }) {
                   </div>
                 </div>
                 {someMorePosts.length > 0 && (
-                  <SomeMoreStories posts={someMorePosts} />
+                  <SomeMoreStories
+                    posts={someMorePosts}
+                    categoryName={category}
+                  />
                 )}
                 <div className="flex mt-8 justify-center items-center w-full">
                   <Link

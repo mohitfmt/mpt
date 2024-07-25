@@ -47,7 +47,7 @@ export async function getPreviewPost(id, idType = "DATABASE_ID") {
 export async function getAllPostsWithSlug() {
   const data = await fetchAPI(`
     {
-      posts(first: 10000) {
+      posts(first: 5) {
         edges {
           node {
             slug
@@ -249,6 +249,7 @@ export async function getCategoryNews(categoryName, preview) {
             title
             excerpt
             slug
+            uri
             date
             featuredImage {
               node {
@@ -257,6 +258,7 @@ export async function getCategoryNews(categoryName, preview) {
             }
             author {
               node {
+                slug
                 name
                 firstName
                 lastName
@@ -311,6 +313,7 @@ export async function getOtherSportsNews(categoryName, preview) {
             title
             excerpt
             slug
+            uri
             date
             featuredImage {
               node {
@@ -319,6 +322,7 @@ export async function getOtherSportsNews(categoryName, preview) {
             }
             author {
               node {
+                slug
                 name
                 firstName
                 lastName

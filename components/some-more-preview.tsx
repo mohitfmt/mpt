@@ -15,7 +15,6 @@ export default function PreviewSomeMore({
       <h3 className="text-3xl font-semibold mb-3 font-rhd">
         <Link
           href={`/posts/${slug}`}
-          className="hover:underline"
           dangerouslySetInnerHTML={{ __html: title }}
         ></Link>
       </h3>
