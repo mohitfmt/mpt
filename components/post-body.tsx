@@ -17,7 +17,7 @@ export default function PostBody({ content, fullArticleUrl }) {
       ></div>
       <div className="flex justify-center items-center">
         <Link
-          href={`https://www.freemalaysiatoday.com/${fullArticleUrl}`}
+          href={`https://www.freemalaysiatoday.com${fullArticleUrl}`}
           target="_blank"
           rel="noopener"
           className="py-4 px-8 font-merriweather text-xl bg-white rounded-lg text-black"
