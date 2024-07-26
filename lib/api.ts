@@ -139,6 +139,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       excerpt
       slug
       date
+      uri
       featuredImage {
         node {
           sourceUrl

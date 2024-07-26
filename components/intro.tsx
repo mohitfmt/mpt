@@ -6,7 +6,9 @@ import React from "react";
 export default function Intro() {
   return (
     <header className="flex justify-between py-4 my-4">
-      <Logo />
+      <Link href="/">
+        <Logo />
+      </Link>
       <div className="flex flex-row items-center gap-0 md:gap-1">
         {social.map((item, index) => (
           <Link

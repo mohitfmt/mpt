@@ -14,10 +14,11 @@ import Tags from "../../components/tags";
 import { getAllPostsWithSlug, getPostAndMorePosts } from "../../lib/api";
 import Intro from "../../components/intro";
 import ArticleJsonLD from "../../components/article-json-ld";
+import SomeMoreStories from "../../components/some-more-stories";
+import Footer from "../../components/footer";
 
 export default function Post({ post, posts, preview }) {
   const router = useRouter();
-  const morePosts = posts?.edges;
 
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -70,22 +71,24 @@ export default function Post({ post, posts, preview }) {
               <ArticleJsonLD data={post} />
               <PostHeader
                 title={post.title}
+                excerpt={post.excerpt}
                 coverImage={post.featuredImage}
                 date={post.date}
                 author={post.author}
                 categories={post.categories}
               />
-              <PostBody content={post.content} />
+              <PostBody content={post.content} fullArticleUrl={post.uri} />
               <footer>
                 {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
               </footer>
             </article>
 
             <SectionSeparator />
-            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+            {posts.length > 0 && <SomeMoreStories posts={posts} />}
           </main>
         )}
       </Container>
+      <Footer />
     </Layout>
   );
 }
@@ -100,8 +103,8 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       preview,
-      post: data.post,
-      posts: data.posts,
+      post: data?.post,
+      posts: data?.posts?.edges?.map((edge) => edge?.node),
     },
     revalidate: 10,
   };

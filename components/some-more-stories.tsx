@@ -1,6 +1,6 @@
 import PreviewSomeMore from "./some-more-preview";
 
-export default function SomeMoreStories({ posts, categoryName }) {
+export default function SomeMoreStories({ posts }) {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-5 mt-10">
       {posts?.map((node) => (

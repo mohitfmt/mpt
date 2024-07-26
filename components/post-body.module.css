@@ -82,3 +82,19 @@
 .content img {
   border-radius: 15px;
 }
+
+.gradientOverlay {
+  position: relative;
+  overflow: hidden;
+  max-height: 100px;
+}
+
+.gradientOverlay::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: linear-gradient(to bottom, transparent, #201c1c);
+}

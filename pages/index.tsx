@@ -107,10 +107,7 @@ export default function Index({ allPosts, preview }) {
                   </div>
                 </div>
                 {someMorePosts.length > 0 && (
-                  <SomeMoreStories
-                    posts={someMorePosts}
-                    categoryName={category}
-                  />
+                  <SomeMoreStories posts={someMorePosts} />
                 )}
                 <div className="flex mt-8 justify-center items-center w-full">
                   <Link
