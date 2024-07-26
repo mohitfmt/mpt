@@ -22,40 +22,36 @@ export default async function sitemap(req, res) {
       const slug = url.replace(/\/$/, "").split("/").pop();
       return {
         loc: `https://matchpointtimes.com/posts/${slug}`,
-        lastmod: entry.lastmod[0], // using the lastmod from the original sitemap entry
+        lastmod: entry.lastmod[0], // Using the lastmod from the original sitemap entry
         changefreq: "daily",
         priority: 0.8,
       };
     });
 
-    // Determine the most recent lastmod for the homepage
-    const lastmodDates = sportsUrls.map((entry) => new Date(entry.lastmod[0]));
-    const latestDate = new Date(Math.max(...lastmodDates));
-
+    // Add homepage to the sitemap entries
     sitemapEntries.push({
       loc: "https://matchpointtimes.com/",
-      lastmod: latestDate.toISOString().split("T")[0], // latest date from the fetched posts
+      lastmod: new Date().toISOString().split("T")[0], // Use the current date for the homepage
       changefreq: "daily",
       priority: 1.0,
     });
 
     // Build a new sitemap XML with these URLs
     const builder = new xml2js.Builder({
-      rootName: "urlset",
       xmldec: { version: "1.0", encoding: "UTF-8" },
       renderOpts: { pretty: true },
+      headless: false,
     });
 
-    const sitemapObj = {
+    const sitemapXml = builder.buildObject({
       urlset: {
         $: {
           xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
         },
         url: sitemapEntries,
       },
-    };
+    });
 
-    const sitemapXml = builder.buildObject(sitemapObj);
     res.setHeader("Content-Type", "application/xml");
     res.send(sitemapXml);
   } catch (error) {
