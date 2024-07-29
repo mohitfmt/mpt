@@ -6,10 +6,13 @@ import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
 import { getCategoryNews, getOtherSportsNews } from "../lib/api";
-import SomeMoreStories from "../components/some-more-stories";
+// import SomeMoreStories from "../components/some-more-stories";
 import Link from "next/link";
 import Footer from "../components/footer";
 import { WebPageJsonLD } from "../lib/json-lds/org";
+import { lazy, Suspense } from "react";
+
+const SomeMoreStories = lazy(() => import("../components/some-more-stories"));
 
 const categories = ["sports", "football", "tennis", "badminton", "motorsports"];
 
@@ -116,7 +119,9 @@ export default function Index({ allPosts, preview }) {
                   </div>
                 </div>
                 {someMorePosts.length > 0 && (
-                  <SomeMoreStories posts={someMorePosts} />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <SomeMoreStories posts={someMorePosts} />
+                  </Suspense>
                 )}
                 <div className="flex mt-8 justify-center items-center w-full">
                   <Link
