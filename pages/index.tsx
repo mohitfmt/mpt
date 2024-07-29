@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import Container from "../components/container";
-import MoreStories from "../components/more-stories";
+//import MoreStories from "../components/more-stories";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
@@ -13,6 +13,7 @@ import { WebPageJsonLD } from "../lib/json-lds/org";
 import { lazy, Suspense } from "react";
 
 const SomeMoreStories = lazy(() => import("../components/some-more-stories"));
+const MoreStories = lazy(() => import("../components/more-stories"));
 
 const categories = ["sports", "football", "tennis", "badminton", "motorsports"];
 
@@ -115,7 +116,11 @@ export default function Index({ allPosts, preview }) {
                     )}
                   </div>
                   <div className="w-full md:w-1/2">
-                    {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+                    <Suspense fallback={<div>Loading...</div>}>
+                      {morePosts.length > 0 && (
+                        <MoreStories posts={morePosts} />
+                      )}
+                    </Suspense>
                   </div>
                 </div>
                 {someMorePosts.length > 0 && (
@@ -200,6 +205,6 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 
   return {
     props: { allPosts, preview },
-    revalidate: 360,
+    revalidate: 60,
   };
 };
