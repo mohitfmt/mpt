@@ -88,7 +88,7 @@ export default function Index({ allPosts, preview }) {
       <Container>
         <Intro />
         <main>
-          {Object.keys(allPosts).map((category) => {
+          {Object.keys(allPosts).map((category, index) => {
             const posts = allPosts[category].edges.map((edge) => edge.node);
             const heroPost = posts[0];
             const morePosts = posts.slice(1, 4);
@@ -112,6 +112,7 @@ export default function Index({ allPosts, preview }) {
                         author={heroPost.author}
                         slug={heroPost.slug}
                         excerpt={heroPost.excerpt}
+                        priority={index < 1}
                       />
                     )}
                   </div>

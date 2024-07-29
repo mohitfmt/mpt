@@ -10,12 +10,18 @@ export default function HeroPost({
   excerpt,
   author,
   slug,
+  priority,
 }) {
   return (
     <article>
       <header className="relative mb-8">
         {coverImage && (
-          <CoverImage title={title} coverImage={coverImage} slug={slug} />
+          <CoverImage
+            title={title}
+            coverImage={coverImage}
+            slug={slug}
+            priority={priority}
+          />
         )}
         <div className="absolute -bottom-4 -left-1 -right-1 text-center bg-gradient-to-t from-[#201c1c] from-60% to-transparent">
           <h3
