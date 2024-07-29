@@ -14,6 +14,13 @@ import { WebPageJsonLD } from "../lib/json-lds/org";
 const categories = ["sports", "football", "tennis", "badminton", "motorsports"];
 
 export default function Index({ allPosts, preview }) {
+  const tags = Object.values(allPosts).flatMap((category) =>
+    (category as any)?.edges?.flatMap((edge) =>
+      edge.node.tags.edges.map((tagEdge) => tagEdge.node.name)
+    )
+  );
+
+  const uniqueTags = Array.from(new Set(tags));
   return (
     <Layout preview={preview}>
       <Head>
@@ -26,7 +33,9 @@ export default function Index({ allPosts, preview }) {
         />
         <meta
           name="keywords"
-          content="sports news, football, badminton, motorsports, tennis, MatchPoint Times"
+          content={`sports news, football, badminton, motorsports, tennis, MatchPoint Times, ${uniqueTags.join(
+            ", "
+          )}`}
         />
         <meta name="author" content="MatchPoint Times" />
 
@@ -149,6 +158,11 @@ const generateCollectionPageJsonLD = (allPosts) => {
     hasPart: Object.keys(allPosts).map((category) => ({
       "@type": "Article",
       headline: `${category.charAt(0).toUpperCase()}${category.slice(1)} News`,
+      keywords: allPosts[category].edges
+        .map((edge) =>
+          edge.node.tags.edges.map((tagEdge) => tagEdge.node.name).join(", ")
+        )
+        .join(", "),
       mainEntityOfPage: {
         "@type": "WebPage",
         "@id": `https://www.freemalaysiatoday.com/category/category/sports/${category}/`,

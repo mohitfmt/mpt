@@ -257,6 +257,15 @@ export async function getCategoryNews(categoryName, preview) {
                 sourceUrl
               }
             }
+            tags {
+              edges {
+                node {
+                  id
+                  name
+                  slug
+                }
+              }
+            }
             author {
               node {
                 slug
@@ -319,6 +328,15 @@ export async function getOtherSportsNews(categoryName, preview) {
             featuredImage {
               node {
                 sourceUrl
+              }
+            }
+            tags {
+              edges {
+                node {
+                  id
+                  name
+                  slug
+                }
               }
             }
             author {
